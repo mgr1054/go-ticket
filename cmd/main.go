@@ -20,6 +20,9 @@ func main() {
 	router.GET("/events/date/:date", controller.GetEventByDate)
 	router.POST("/events", controller.CreateEvent)
 	router.PUT("/events/:id", controller.UpdateEventById)
-	router.DELETE("events/:id", controller.DeleteEventById)
+	router.DELETE("/events/:id", controller.DeleteEventById)
+	router.GET("/ticket/:id", controller.CreateTicket)
+	router.GET("/tickets/event/:id", controller.GetTicketsByEvent)
+	router.DELETE("/ticket/:id", controller.DeleteTicketById)
 	router.Run("localhost:8080")
 }

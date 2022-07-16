@@ -11,7 +11,7 @@ import (
 type NewEvent struct {
 	Band_Name	string		`json:"band_name" binding:"required"`
 	Location	string		`json:"location" binding:"required"`
-	City		string		`json:"city" binding:"required"`
+	Price		string		`json:"price" binding:"required"`
 	Capacity	int			`json:"capacity" binding:"required"`
 	Date 		string		`json:"date" binding:"required"`
 }
@@ -19,7 +19,7 @@ type NewEvent struct {
 type EventUpdate struct {
 	Band_Name	string		`json:"band_name"`
 	Location	string		`json:"location"`
-	City		string		`json:"city"`
+	Price		string		`json:"price"`
 	Capacity	int			`json:"capacity"`
 	Date 		string		`json:"date"`
 }
@@ -45,7 +45,7 @@ func CreateEvent (c *gin.Context) {
 	newEvent := models.Event{
 		Band_Name: event.Band_Name, 
 		Location: event.Location, 
-		City: event.City, 
+		Price: event.Price, 
 		Capacity: 
 		event.Capacity, 
 		Date: event.Date,
@@ -121,7 +121,7 @@ func UpdateEventById (c *gin.Context) {
 	if err:= db.DB.Model(&event).Updates(models.Event{
 		Band_Name: updateEvent.Band_Name, 
 		Location: updateEvent.Location, 
-		City: updateEvent.City, 
+		Price: updateEvent.Price, 
 		Capacity: updateEvent.Capacity, 
 		Date: updateEvent.Date,
 	}).Error; err != nil {

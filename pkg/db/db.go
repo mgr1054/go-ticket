@@ -35,6 +35,13 @@ func Connect(){
 		log.Fatalln(err)
 	}
 	log.Info("Event Model migrated to DB")
+
+	err = db.AutoMigrate(&models.Ticket{})
+	if err != nil {
+		log.Fatalln(err)
+	}
+	log.Info("Event Ticket migrated to DB")
+	
 	
 	DB = db
 }
