@@ -1,4 +1,4 @@
-module github.com/grma1054/j-project
+module github.com/grma1054/go-ticket
 
 go 1.18
 
