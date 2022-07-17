@@ -10,20 +10,20 @@ import (
 )
 
 const (
-	host = "localhost"
-	port = "5432"
-	user = "admin"
+	host     = "database"
+	port     = "5432"
+	user     = "admin"
 	password = "p"
-	dbname = "postgres"
-	sslmode = "disable"
+	dbname   = "postgres"
+	sslmode  = "disable"
 )
 
 var DB *gorm.DB
 
-func Connect(){
-	
+func Connect() {
+
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s", host, port, user, password, dbname, sslmode)
-	log.Info("Using DSN for DB:", dsn) 
+	log.Info("Using DSN for DB:", dsn)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -50,5 +50,3 @@ func Connect(){
 
 	DB = db
 }
-
-

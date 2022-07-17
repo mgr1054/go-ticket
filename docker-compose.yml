@@ -1,4 +1,13 @@
 services:
+  app:
+    container_name: go-ticket
+    build: .
+    ports:
+      - "8080:8080"
+    restart: on-failure
+    depends_on:
+      - database
+
   database:
     container_name: database
     image: postgres:12.8
@@ -8,6 +17,4 @@ services:
       - POSTGRES_PASSWORD=p
       - POSTGRES_DB=database
     ports:
-      - 5432:5432
-    volumes:
-      - db:/var/lib/postgresql/data 
+      - '5432:5432'
