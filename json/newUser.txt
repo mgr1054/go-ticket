@@ -1,0 +1,29 @@
+
+{
+    "name": "Max",
+    "username" : "mgr",
+    "email" : "mgr@online.de",
+    "password" : "1234"
+}
+
+{
+    "name": "Luca",
+    "username" : "lro",
+    "email" : "lro@online.de",
+    "password" : ""
+}
+
+{
+    "name": "Luca",
+    "username" : "lro",
+    "email" : "lro@online.de",
+    "password" : "1234"
+}
+    
+{
+    "name": "Fabian",
+    "username" : "fwa",
+    "email" : "fwa@online.de",
+    "password" : "1234",
+    "user" : "admin"
+}
