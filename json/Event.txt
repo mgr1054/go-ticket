@@ -1,0 +1,31 @@
+{ 
+    "Band_Name": "KIZ", 
+    "Location": "Brückern-Arena", 
+    "Price": "55", 
+    "Capacity": 20000, 
+    "Date": "2022-10-17"
+}
+
+{ 
+    "Band_Name": "DJ Wolle", 
+    "Location": "Sporthalle", 
+    "Price": "12", 
+    "Capacity": 3, 
+    "Date": "2022-07-22"
+}
+
+{ 
+    "Band_Name": "Deichkind", 
+    "Location": "Olympiastadion", 
+    "Price": "60", 
+    "Capacity": 35000, 
+    "Date": "2022-10-17"
+}
+
+{ 
+    "Band_Name": "Kings of Leon", 
+    "Location": "Olympiastadion", 
+    "Price": "63", 
+    "Capacity": 35000, 
+    "Date": "2022-10-25"
+}

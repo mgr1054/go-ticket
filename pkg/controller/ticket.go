@@ -76,7 +76,7 @@ func CreateTicket (c *gin.Context) {
 // @ID				get-tickets-by-event-id
 // @Tags 			tickets
 // @Produce 		json
-// @Success 		200 {object} models.Event
+// @Success 		200 {int} 	 json "{"data": usedCapacity}"
 // @Failure			401 {string} json "{"error":"Unauthorized for this route"}"
 // @Failure			404 {string} json "{"error": "Tickets not found"}""
 // @Router 			/secured/tickets/events/{id} [get]
@@ -94,7 +94,7 @@ func GetTicketsByEvent (c* gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, usedCapacity)
+	c.JSON(http.StatusOK, gin.H{"data": usedCapacity})
 }
 
 // @Summary 		Get Tickets By UserID
