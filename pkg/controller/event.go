@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/mgr1054/go-ticket/pkg/database"
 	"github.com/mgr1054/go-ticket/pkg/models"
+	"github.com/mgr1054/go-ticket/pkg/utils"
 )
 
 type NewEvent struct {
@@ -25,6 +26,12 @@ type EventUpdate struct {
 }
 
 func GetEvents (c *gin.Context) {
+
+	if err := utils.CheckUserType(c, "admin"); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
+		return
+	}
+
 	var events []models.Event
 	if err := db.DB.Find(&events).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Could not get events"})

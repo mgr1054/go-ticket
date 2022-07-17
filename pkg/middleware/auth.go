@@ -8,19 +8,21 @@ import (
 
 // validate token from gin http request 
 func Auth() gin.HandlerFunc{
-	return func(context *gin.Context) {
-		tokenString := context.GetHeader("Authorization")
+	return func(c *gin.Context) {
+		tokenString := c.GetHeader("Authorization")
 		if tokenString == "" {
-			context.JSON(401, gin.H{"error": "request does not contain an access token"})
-			context.Abort()
+			c.JSON(401, gin.H{"error": "request does not contain an access token"})
+			c.Abort()
 			return
 		}
-		err:= utils.ValidateToken(tokenString)
+		claims, err := utils.ValidateToken(tokenString)
 		if err != nil {
-			context.JSON(401, gin.H{"error": err.Error()})
-			context.Abort()
+			c.JSON(401, gin.H{"error": err.Error()})
+			c.Abort()
 			return
 		}
-		context.Next()
+		
+		c.Set("role", claims.Role)
+		c.Next()
 	}
 }

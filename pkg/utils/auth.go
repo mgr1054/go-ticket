@@ -4,6 +4,7 @@ import (
 	"errors"
 	"time"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
 )
 
 // used to generate JWTs
@@ -13,15 +14,17 @@ var jwtKey = []byte("supersecretkey")
 type JWTClaim struct {
 	Username string `json:"username"`
 	Email    string `json:"email"`
+	Role	 string `json:"role"`
 	jwt.StandardClaims
 }
 
 // generate token with HS256 Signing, expiration 1 hour
-func GenerateJWT(email string, username string) (tokenString string, err error) {
+func GenerateJWT(email string, username string, role string) (tokenString string, err error) {
 	expirationTime := time.Now().Add(1 * time.Hour)
 	claims:= &JWTClaim{
 		Email: email,
 		Username: username,
+		Role: role,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
 		},
@@ -32,7 +35,7 @@ func GenerateJWT(email string, username string) (tokenString string, err error) 
 }
 
 // validate token, check if expired
-func ValidateToken(signedToken string) (err error) {
+func ValidateToken(signedToken string) (claims *JWTClaim, err error) {
 	token, err := jwt.ParseWithClaims(
 		signedToken,
 		&JWTClaim{},
@@ -52,5 +55,16 @@ func ValidateToken(signedToken string) (err error) {
 		err = errors.New("token expired")
 		return
 	}
-	return
+	return claims, err
+}
+
+func CheckUserType(c *gin.Context, role string)(err error){
+	
+	userRole := c.GetString("role")
+	err = nil
+	if userRole != role {
+        err = errors.New("Unauthorized to access this resource")
+        return err
+    }
+	return err
 }
