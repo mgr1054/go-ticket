@@ -64,7 +64,7 @@ const docTemplate = `{
                         }
                     },
                     "404": {
-                        "description": "Not Found",
+                        "description": "{\"error\": \"Could not get events\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -103,19 +103,19 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "Bad Request",
+                        "description": "{\"error\": \"Could not create Event\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "{\"error\":\"Unauthorized for this route\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "{\"error\": \"Could not create Event\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -145,13 +145,13 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "{\"error\":\"Unauthorized for this route\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "404": {
-                        "description": "Not Found",
+                        "description": "{\"error\": \"Event not found\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -178,13 +178,13 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "{\"error\":\"Unauthorized for this route\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "404": {
-                        "description": "Not Found",
+                        "description": "{\"error\": \"Event not found\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -209,25 +209,25 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "Bad Request",
+                        "description": "{\"error\": \"Event could not be updated with provided data\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "{\"error\":\"Unauthorized for this route\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "404": {
-                        "description": "Not Found",
+                        "description": "{\"error\": \"Event not found\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "{\"error\": \"Could not update Event\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -246,25 +246,25 @@ const docTemplate = `{
                 "operationId": "delete-event-by-id",
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "{\"message\": \"Event deleted\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "{\"error\":\"Unauthorized for this route\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "404": {
-                        "description": "Not Found",
+                        "description": "{\"error\": \"Event not found!\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "{\"error\": \"Could not create Event\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -294,13 +294,13 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "{\"error\":\"Unauthorized for this route\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "404": {
-                        "description": "Not Found",
+                        "description": "{\"error\": \"Event not found\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -326,26 +326,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/models.Event"
                         }
                     },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "{\"error\":\"Unauthorized for this route\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
+                        "description": "{\"error\": \"Tickets not found\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -411,19 +399,19 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "{\"error\":\"Unauthorized for this route\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "404": {
-                        "description": "Not Found",
+                        "description": "{\"error\": \"User not found\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "{\"error\": \"Could not create Ticket\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -442,25 +430,25 @@ const docTemplate = `{
                 "operationId": "delete-tickets-by-user-id",
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "{\"message\": \"Ticket deleted\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "{\"error\":\"Unauthorized for this route\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "404": {
-                        "description": "Not Found",
+                        "description": "{\"error\": \"Tickets not found\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "{\"error\": \"Could not parse time\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -487,13 +475,13 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "{\"error\":\"Unauthorized for this route\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "404": {
-                        "description": "Not Found",
+                        "description": "{\"error\": \"User not found\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -532,13 +520,13 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "{\"error\":\"Unauthorized for this route\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "404": {
-                        "description": "Not Found",
+                        "description": "{\"error\": \"User not found\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -557,19 +545,19 @@ const docTemplate = `{
                 "operationId": "delete-user-by-id",
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "{\"message\": \"User deleted\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "{\"error\":\"Unauthorized for this route\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "404": {
-                        "description": "Not Found",
+                        "description": "{\"error\": \"User not found\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -607,25 +595,25 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "Bad Request",
+                        "description": "{\"error\": \"Could not create Token\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "{\"error\": \"Password incorrect",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "404": {
-                        "description": "Not Found",
+                        "description": "{\"error\":\"User not found\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "{\"error\":\"Could not create Token\"}",
                         "schema": {
                             "type": "string"
                         }

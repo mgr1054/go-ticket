@@ -33,7 +33,7 @@ type EventUpdate struct {
 // @Tags 			events
 // @Produce 		json
 // @Success 		200 {object} []models.Event
-// @Failure			404 {object} string
+// @Failure			404 {string} json "{"error": "Could not get events"}"
 // @Router 			/secured/events [get]
 func GetEvents (c *gin.Context) {
 
@@ -60,9 +60,9 @@ func GetEvents (c *gin.Context) {
 // @Produce 		json
 // @Param			event body NewEvent true "Create Event"
 // @Success 		201 {object} models.Event
-// @Failure			400 {object} string
-// @Failure			401 {object} string
-// @Failure			500 {object} string
+// @Failure			400 {string} json "{"error": "Could not create Event"}"
+// @Failure			401 {string} json "{"error":"Unauthorized for this route"}"
+// @Failure			500 {string} json "{"error": "Could not create Event"}"
 // @Router 			/secured/events [post]
 func CreateEvent (c *gin.Context) {
 
@@ -101,8 +101,8 @@ func CreateEvent (c *gin.Context) {
 // @Tags 			events
 // @Produce 		json
 // @Success 		200 {object} models.Event
-// @Failure			401 {object} string
-// @Failure			404 {object} string
+// @Failure			401 {string} json "{"error":"Unauthorized for this route"}"
+// @Failure			404 {string} json "{"error": "Event not found"}"
 // @Router 			/secured/events/{id} [get]
 func GetEventByID (c *gin.Context) {
 
@@ -128,8 +128,8 @@ func GetEventByID (c *gin.Context) {
 // @Tags 			events
 // @Produce 		json
 // @Success 		200 {object} []models.Event
-// @Failure			401 {object} string
-// @Failure			404 {object} string
+// @Failure			401 {string} json "{"error":"Unauthorized for this route"}"
+// @Failure			404 {string} json "{"error": "Event not found"}"
 // @Router 			/secured/events/{location} [get]
 func GetEventByLocation (c *gin.Context) {
 
@@ -160,8 +160,8 @@ func GetEventByLocation (c *gin.Context) {
 // @Tags 			events
 // @Produce 		json
 // @Success 		200 {object} []models.Event
-// @Failure			401 {object} string
-// @Failure			404 {object} string
+// @Failure			401 {string} json "{"error":"Unauthorized for this route"}"
+// @Failure			404 {string} json "{"error": "Event not found"}"
 // @Router 			/secured/events/{date} [get]
 func GetEventByDate (c *gin.Context) {
 
@@ -192,10 +192,10 @@ func GetEventByDate (c *gin.Context) {
 // @Tags 			events
 // @Produce 		json
 // @Success 		200 {object} models.Event
-// @Failure			400 {object} string
-// @Failure			401 {object} string
-// @Failure			404 {object} string
-// @Failure			500 {object} string
+// @Failure			400 {string} json "{"error": "Event could not be updated with provided data"}"
+// @Failure			401 {string} json "{"error":"Unauthorized for this route"}"
+// @Failure			404 {string} json "{"error": "Event not found"}"
+// @Failure			500 {string} json "{"error": "Could not update Event"}"
 // @Router 			/secured/events/{id} [put]
 func UpdateEventById (c *gin.Context) {
 
@@ -238,10 +238,10 @@ func UpdateEventById (c *gin.Context) {
 // @ID				delete-event-by-id
 // @Tags 			events
 // @Produce 		plain
-// @Success 		200 {object} string
-// @Failure			401 {object} string
-// @Failure			404 {object} string
-// @Failure			500 {object} string
+// @Success 		200 {string} json "{"message": "Event deleted"}"
+// @Failure			401 {string} json "{"error":"Unauthorized for this route"}"
+// @Failure			404 {string} json "{"error": "Event not found!"}"
+// @Failure			500 {string} json "{"error": "Could not create Event"}"
 // @Router 			/secured/events/{id} [delete]
 func DeleteEventById (c *gin.Context) {
 
@@ -258,7 +258,7 @@ func DeleteEventById (c *gin.Context) {
     }
 
 	if err := db.DB.Delete(&event).Error; err != nil {
-        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not create Event"})
         return
     }
 

@@ -26,9 +26,9 @@ type TicketRequest struct {
 // @Tags 			tickets
 // @Produce 		json
 // @Success 		200 {object} models.Ticket
-// @Failure			401 {object} string
-// @Failure			404 {object} string
-// @Failure			500 {object} string
+// @Failure			401 {string} json "{"error":"Unauthorized for this route"}"
+// @Failure			404 {string} json "{"error": "User not found"}"
+// @Failure			500 {string} json "{"error": "Could not create Ticket"}"
 // @Router 			/secured/tickets/{id} [get]
 func CreateTicket (c *gin.Context) {
 
@@ -77,10 +77,8 @@ func CreateTicket (c *gin.Context) {
 // @Tags 			tickets
 // @Produce 		json
 // @Success 		200 {object} models.Event
-// @Failure			400 {object} string
-// @Failure			401 {object} string
-// @Failure			404 {object} string
-// @Failure			500 {object} string
+// @Failure			401 {string} json "{"error":"Unauthorized for this route"}"
+// @Failure			404 {string} json "{"error": "Tickets not found"}""
 // @Router 			/secured/tickets/events/{id} [get]
 func GetTicketsByEvent (c* gin.Context) {
 
@@ -138,10 +136,10 @@ func GetTicketsByID (c* gin.Context) {
 // @ID				delete-tickets-by-user-id
 // @Tags 			tickets
 // @Produce 		json
-// @Success 		200 {object} string
-// @Failure			401 {object} string
-// @Failure			404 {object} string
-// @Failure			500 {object} string
+// @Success 		200 {string} json "{"message": "Ticket deleted"}"
+// @Failure			401 {string} json "{"error":"Unauthorized for this route"}"
+// @Failure			404 {string} json "{"error": "Tickets not found"}"
+// @Failure			500 {string} json "{"error": "Could not parse time"}"
 // @Router 			/secured/tickets/{id} [delete]
 func DeleteTicketById (c *gin.Context) {
 
@@ -174,7 +172,7 @@ func DeleteTicketById (c *gin.Context) {
 	
 
 	if err := db.DB.Delete(&ticket).Error; err != nil {
-        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not delete Ticket"})
         return
     }
 

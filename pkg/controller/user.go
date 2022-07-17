@@ -59,8 +59,8 @@ func RegisterUser(c *gin.Context) {
 // @Tags 			user
 // @Produce 		json
 // @Success 		200 {object} models.User
-// @Failure			401 {object} string
-// @Failure			404 {object} string
+// @Failure			401 {string} json "{"error":"Unauthorized for this route"}"
+// @Failure			404 {string} json "{"error": "User not found"}"
 // @Router 			/secured/user/{id} [get]
 func GetUserById (c *gin.Context) {
 
@@ -88,8 +88,8 @@ func GetUserById (c *gin.Context) {
 // @Accept			json
 // @Param			user body UserUpdate true "Update User"
 // @Success 		200 {object} models.User
-// @Failure			401 {object} string
-// @Failure			404 {object} string
+// @Failure			401 {string} json "{"error":"Unauthorized for this route"}"
+// @Failure			404 {string} json "{"error": "User not found"}"
 // @Router 			/secured/user/{id} [put]
 func UpdateUserById (c *gin.Context) {
 
@@ -132,9 +132,9 @@ func UpdateUserById (c *gin.Context) {
 // @ID				delete-user-by-id
 // @Tags 			user
 // @Produce 		json
-// @Success 		200 {object} string
-// @Failure			401 {object} string
-// @Failure			404 {object} string
+// @Success 		200 {string} json "{"message": "User deleted"}"
+// @Failure			401 {string} json "{"error":"Unauthorized for this route"}"
+// @Failure			404 {string} json "{"error": "User not found"}"
 // @Router 			/secured/user/{id} [delete]
 func DelteUserById (c *gin.Context) {
 
@@ -146,7 +146,7 @@ func DelteUserById (c *gin.Context) {
 	var user models.User
 
 	if err := db.DB.Where("id = ?", c.Param("id")).First(&user).Error; err != nil {
-        c.JSON(http.StatusNotFound, gin.H{"error": "User not found!"})
+        c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
         return
     }
 

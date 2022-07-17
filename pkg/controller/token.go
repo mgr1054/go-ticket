@@ -22,11 +22,11 @@ type TokenRequest struct {
 // @Tags 			auth
 // @Produce 		json
 // @Param			credentials body TokenRequest true "Create Token"
-// @Success 		201 {object} string
-// @Failure			400 {object} string
-// @Failure			401 {object} string
-// @Failure			404 {object} string
-// @Failure			500 {object} string
+// @Success 		201 {string} json
+// @Failure			400 {string} json "{"error": "Could not create Token"}"
+// @Failure			401 {string} json "{"error": "Password incorrect""
+// @Failure			404 {string} json "{"error":"User not found"}"
+// @Failure			500 {string} json "{"error":"Could not create Token"}"
 // @Router 			/token [post]
 func GenerateToken(c *gin.Context) {
 	var request TokenRequest

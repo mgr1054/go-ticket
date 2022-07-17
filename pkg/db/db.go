@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	host     = "database"
+	host     = "localhost"
 	port     = "5432"
 	user     = "admin"
 	password = "p"

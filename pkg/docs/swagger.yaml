@@ -133,7 +133,7 @@ paths:
               $ref: '#/definitions/models.Event'
             type: array
         "404":
-          description: Not Found
+          description: '{"error": "Could not get events"}'
           schema:
             type: string
       summary: Get All Events
@@ -161,15 +161,15 @@ paths:
           schema:
             $ref: '#/definitions/models.Event'
         "400":
-          description: Bad Request
+          description: '{"error": "Could not create Event"}'
           schema:
             type: string
         "401":
-          description: Unauthorized
+          description: '{"error":"Unauthorized for this route"}'
           schema:
             type: string
         "500":
-          description: Internal Server Error
+          description: '{"error": "Could not create Event"}'
           schema:
             type: string
       summary: Create Event
@@ -191,11 +191,11 @@ paths:
               $ref: '#/definitions/models.Event'
             type: array
         "401":
-          description: Unauthorized
+          description: '{"error":"Unauthorized for this route"}'
           schema:
             type: string
         "404":
-          description: Not Found
+          description: '{"error": "Event not found"}'
           schema:
             type: string
       summary: Get Event By Date
@@ -211,19 +211,19 @@ paths:
       - text/plain
       responses:
         "200":
-          description: OK
+          description: '{"message": "Event deleted"}'
           schema:
             type: string
         "401":
-          description: Unauthorized
+          description: '{"error":"Unauthorized for this route"}'
           schema:
             type: string
         "404":
-          description: Not Found
+          description: '{"error": "Event not found!"}'
           schema:
             type: string
         "500":
-          description: Internal Server Error
+          description: '{"error": "Could not create Event"}'
           schema:
             type: string
       summary: Delete Event By ID
@@ -242,11 +242,11 @@ paths:
           schema:
             $ref: '#/definitions/models.Event'
         "401":
-          description: Unauthorized
+          description: '{"error":"Unauthorized for this route"}'
           schema:
             type: string
         "404":
-          description: Not Found
+          description: '{"error": "Event not found"}'
           schema:
             type: string
       summary: Get Event By ID
@@ -265,19 +265,19 @@ paths:
           schema:
             $ref: '#/definitions/models.Event'
         "400":
-          description: Bad Request
+          description: '{"error": "Event could not be updated with provided data"}'
           schema:
             type: string
         "401":
-          description: Unauthorized
+          description: '{"error":"Unauthorized for this route"}'
           schema:
             type: string
         "404":
-          description: Not Found
+          description: '{"error": "Event not found"}'
           schema:
             type: string
         "500":
-          description: Internal Server Error
+          description: '{"error": "Could not update Event"}'
           schema:
             type: string
       summary: Update Event By ID
@@ -299,11 +299,11 @@ paths:
               $ref: '#/definitions/models.Event'
             type: array
         "401":
-          description: Unauthorized
+          description: '{"error":"Unauthorized for this route"}'
           schema:
             type: string
         "404":
-          description: Not Found
+          description: '{"error": "Event not found"}'
           schema:
             type: string
       summary: Get Event By Location
@@ -319,19 +319,19 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
+          description: '{"message": "Ticket deleted"}'
           schema:
             type: string
         "401":
-          description: Unauthorized
+          description: '{"error":"Unauthorized for this route"}'
           schema:
             type: string
         "404":
-          description: Not Found
+          description: '{"error": "Tickets not found"}'
           schema:
             type: string
         "500":
-          description: Internal Server Error
+          description: '{"error": "Could not parse time"}'
           schema:
             type: string
       summary: Delete Ticket By ID
@@ -350,15 +350,15 @@ paths:
           schema:
             $ref: '#/definitions/models.Ticket'
         "401":
-          description: Unauthorized
+          description: '{"error":"Unauthorized for this route"}'
           schema:
             type: string
         "404":
-          description: Not Found
+          description: '{"error": "User not found"}'
           schema:
             type: string
         "500":
-          description: Internal Server Error
+          description: '{"error": "Could not create Ticket"}'
           schema:
             type: string
       summary: Create Ticket by EventID
@@ -377,20 +377,12 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.Event'
-        "400":
-          description: Bad Request
-          schema:
-            type: string
         "401":
-          description: Unauthorized
+          description: '{"error":"Unauthorized for this route"}'
           schema:
             type: string
         "404":
-          description: Not Found
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
+          description: '{"error": "Tickets not found"}'
           schema:
             type: string
       summary: Get Tickets By EventID
@@ -434,15 +426,15 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
+          description: '{"message": "User deleted"}'
           schema:
             type: string
         "401":
-          description: Unauthorized
+          description: '{"error":"Unauthorized for this route"}'
           schema:
             type: string
         "404":
-          description: Not Found
+          description: '{"error": "User not found"}'
           schema:
             type: string
       summary: Delete User By ID
@@ -461,11 +453,11 @@ paths:
           schema:
             $ref: '#/definitions/models.User'
         "401":
-          description: Unauthorized
+          description: '{"error":"Unauthorized for this route"}'
           schema:
             type: string
         "404":
-          description: Not Found
+          description: '{"error": "User not found"}'
           schema:
             type: string
       summary: Get User By ID
@@ -493,11 +485,11 @@ paths:
           schema:
             $ref: '#/definitions/models.User'
         "401":
-          description: Unauthorized
+          description: '{"error":"Unauthorized for this route"}'
           schema:
             type: string
         "404":
-          description: Not Found
+          description: '{"error": "User not found"}'
           schema:
             type: string
       summary: Update User By ID
@@ -525,19 +517,19 @@ paths:
           schema:
             type: string
         "400":
-          description: Bad Request
+          description: '{"error": "Could not create Token"}'
           schema:
             type: string
         "401":
-          description: Unauthorized
+          description: '{"error": "Password incorrect'
           schema:
             type: string
         "404":
-          description: Not Found
+          description: '{"error":"User not found"}'
           schema:
             type: string
         "500":
-          description: Internal Server Error
+          description: '{"error":"Could not create Token"}'
           schema:
             type: string
       summary: Generate Token
