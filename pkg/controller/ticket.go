@@ -6,9 +6,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/mgr1054/go-ticket/pkg/database"
 	"github.com/mgr1054/go-ticket/pkg/models"
+	"github.com/mgr1054/go-ticket/pkg/utils"
 )
 
 func CreateTicket (c *gin.Context) {
+
+	if err := utils.CheckUserType(c, "user"); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
+		return
+	}
 
 	event := models.Event{}
 	db.DB.First(&event, "id = ?", c.Param("id"))
@@ -37,6 +43,11 @@ func CreateTicket (c *gin.Context) {
 }
 
 func GetTicketsByEvent (c* gin.Context) {
+
+	if err := utils.CheckUserType(c, "user"); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
+		return
+	}
 	
 	usedCapacity := int64(0)
 
@@ -49,6 +60,11 @@ func GetTicketsByEvent (c* gin.Context) {
 }
 
 func DeleteTicketById (c *gin.Context) {
+
+	if err := utils.CheckUserType(c, "user"); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
+		return
+	}
 	
 	var ticket models.Ticket
 

@@ -62,9 +62,17 @@ func CheckUserType(c *gin.Context, role string)(err error){
 	
 	userRole := c.GetString("role")
 	err = nil
+
+	// gives admin access to all
+	if userRole == "admin" {
+		return err 
+	}
+
 	if userRole != role {
-        err = errors.New("Unauthorized to access this resource")
+		err = errors.New("Unauthorized to access this resource")
         return err
     }
+
 	return err
+
 }

@@ -27,7 +27,7 @@ type EventUpdate struct {
 
 func GetEvents (c *gin.Context) {
 
-	if err := utils.CheckUserType(c, "admin"); err != nil {
+	if err := utils.CheckUserType(c, "user"); err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
 		return
 	}
@@ -42,6 +42,12 @@ func GetEvents (c *gin.Context) {
 }
 
 func CreateEvent (c *gin.Context) {
+
+	if err := utils.CheckUserType(c, "admin"); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
+		return
+	}
+
 	var event NewEvent
 	
 	if err := c.ShouldBindJSON(&event); err != nil {
@@ -67,6 +73,12 @@ func CreateEvent (c *gin.Context) {
 }
 
 func GetEventByID (c *gin.Context) {
+
+	if err := utils.CheckUserType(c, "user"); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
+		return
+	}
+
 	var event models.Event
 
 	if err := db.DB.Where("id = ?", c.Param("id")).First(&event).Error; err != nil {
@@ -78,6 +90,12 @@ func GetEventByID (c *gin.Context) {
 }
 
 func GetEventByLocation (c *gin.Context) {
+
+	if err := utils.CheckUserType(c, "user"); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
+		return
+	}
+
 	var event []models.Event
 
 	if err := db.DB.Where("location = ?", c.Param("location")).Find(&event).Error; err != nil {
@@ -94,6 +112,12 @@ func GetEventByLocation (c *gin.Context) {
 }
 
 func GetEventByDate (c *gin.Context) {
+
+	if err := utils.CheckUserType(c, "user"); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
+		return
+	}
+
 	var event []models.Event
 
 	if err := db.DB.Where("date = ?", c.Param("date")).Find(&event).Error; err != nil {
@@ -110,6 +134,11 @@ func GetEventByDate (c *gin.Context) {
 }
 
 func UpdateEventById (c *gin.Context) {
+
+	if err := utils.CheckUserType(c, "admin"); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
+		return
+	}
 	
 	var event models.Event
 
@@ -140,6 +169,11 @@ func UpdateEventById (c *gin.Context) {
 }
 
 func DeleteEventById (c *gin.Context) {
+
+	if err := utils.CheckUserType(c, "admin"); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
+		return
+	}
 	
 	var event models.Event
 
