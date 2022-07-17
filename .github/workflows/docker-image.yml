@@ -33,7 +33,6 @@ jobs:
         file: ./Dockerfile
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/private:latest
         cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/private:buildcache
         cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/private:buildcache,mode=max
         
