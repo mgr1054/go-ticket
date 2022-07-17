@@ -24,7 +24,7 @@ func GenerateJWT(email string, username string, role string) (tokenString string
 	claims:= &JWTClaim{
 		Email: email,
 		Username: username,
-		Role: role,
+		Role: "user",
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
 		},

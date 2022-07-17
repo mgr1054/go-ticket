@@ -1,10 +1,10 @@
 package db
 
 import (
-
 	"fmt"
-	log "github.com/sirupsen/logrus"
+
 	"github.com/mgr1054/go-ticket/pkg/models"
+	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -47,6 +47,8 @@ func Connect(){
 		log.Fatalln(err)
 	}
 	log.Info("User migrated to DB")
-	
+
 	DB = db
 }
+
+

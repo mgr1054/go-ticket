@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/mgr1054/go-ticket/pkg/utils"
-	"github.com/mgr1054/go-ticket/pkg/database"
+	"github.com/mgr1054/go-ticket/pkg/db"
 	"github.com/mgr1054/go-ticket/pkg/models"
 	"net/http"
 	"github.com/gin-gonic/gin"

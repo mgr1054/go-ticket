@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/mgr1054/go-ticket/pkg/database"
+	"github.com/mgr1054/go-ticket/pkg/db"
 	"github.com/mgr1054/go-ticket/pkg/models"
 	"net/http"
 	"github.com/gin-gonic/gin"
@@ -14,6 +14,9 @@ func RegisterUser(c *gin.Context) {
 		c.Abort()
 		return
 	}
+	
+	user.Role = "user"
+	
 	if err := user.HashPassword(user.Password); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		c.Abort()

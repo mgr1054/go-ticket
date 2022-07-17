@@ -3,13 +3,15 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/mgr1054/go-ticket/pkg/controller"
-	"github.com/mgr1054/go-ticket/pkg/database"
+	"github.com/mgr1054/go-ticket/pkg/db"
 	"github.com/mgr1054/go-ticket/pkg/middleware"
+	"github.com/mgr1054/go-ticket/pkg/utils"
 	log "github.com/sirupsen/logrus"
 )
 
 func init() {
 	db.Connect()
+	utils.InitAdmin()
 }
 
 func main() {
