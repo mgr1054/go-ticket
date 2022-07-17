@@ -8,5 +8,5 @@ import (
 
 func Health(c *gin.Context) {
 	log.Info("API Health is OK")
-	c.JSON(http.StatusOK, "Alive")
+	c.JSON(http.StatusOK, gin.H{"message": "Alive"})
 }
