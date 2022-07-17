@@ -1,7 +1,7 @@
 services:
   app:
     container_name: go-ticket
-    build: .
+    image: pmulieeee/go-ticket:latest
     ports:
       - "8080:8080"
     restart: on-failure
