@@ -1,108 +1,72 @@
-# Gin Template
+# Go Ticket
 
-A simple gin RESTful API template with following function.
+A simple Gin REST-API with following features:
 
-- complete backend architecture
-- use gorm build data model
-- use logrus and other plugin to build logger service
-- user swagger to generate docs and mock test
-- simple user auth service with JWT
-- simple test framework
-- ci/cd example
 
-## Arch
+- Backend Architecture with Gin-Gonic and PosgreSQL to manage events, tickets & users 
+- Data Modles build with GORM
+- Logging with Loggrus
+- Documentation with Swagger
+- Authentication and Authorization with JWT
+- Password Encryption with Bycrypt
+- Containerization with Docker
+- CI with Github Actions
+
+## Architecture
 
 ```
 --- pkg
- |------- common
  |------- controller
+ |------- db
+ |------- docs
  |------- middleware
- |------- model
- |------- router
- |------- setting
+ |------- models
+ |------- utils
 ```
 
-- common
-  - put tool which use in other service, ex. jwt, logger, etc.
 - controller
-  - accept input come from router
+  - implement logic and handle input from router
+- db
+  - setup database connection
 - middleware
-  - some middleware, ex. logger, auth, etc.
-- router
-  - put all router here
+  - middleware for authorization
+- models
+  - database models
 - setting
-  - convert enviroment value to CONFIG struct here
+  - JWT generation and database helpers
 
-## Enviroment
+## Getting started
 
-All env this project use, you can change default value in [here](https://github.com/arasHi87/gin-template/blob/4135c0937fb69b9d301eae120ae833893443a775/pkg/setting/setting.go#L51).
+You need [Docker Desktop](https://www.docker.com/products/docker-desktop/) to start with this tutorial.  
+Alternatively you can run the service locally without docker by running `go run .` inside the root folder.  
+If you chose to do that a PostgreSQL Database is needed with the following setup: 
 
-| Name        | Description                         | Value        | Type   |
-| ----------- | ----------------------------------- | ------------ | ------ |
-| APP_ADDRESS | web app address                     | 8080         | string |
-| APP_PORT    | web app port                        | 0.0.0.0      | string |
-| DB_HOST     | DB host                             | localhost    | string |
-| DB_PORT     | DB port                             | 5432         | string |
-| DB_NAME     | DB name                             | gintemplate  | string |
-| DB_USERNAME | DB user name                        | arashi87     | string |
-| DB_PASSWORD | DB user password                    | m3ow87       | string |
-| DB_TIMEZONE | DB timezone                         | Asia/Taipei  | string |
-| JWT_EXPIRE  | JWT expire time (hours)             | 1            | int    |
-| JWT_SECRET  | JWT secret                          | arashi87     | string |
-| JWT_ISSUER  | JET issuer                          | arashi87     | string |
-| LOG_PATH    | Log file save path                  | /tmp/gin.log | string |
-| LOG_EXPIRE  | Log file expire time (hours)        | 720          | int    |
-| LOG_ROTATE  | When should log file rotate (hours) | 12           | int    |
+| Name     | Value         |
+| -------- | ------------- |
+| host     | database      |
+| user     | admin         |
+| password | p             |
+| dbname   | postgres      |
 
-## Logger
+1. Checkout the repository to your local IDE. 
 
-This project use logrus + rotatelogs + lfshook to build log service.
-
-- logrus use to instead of origin go logger
-- rotatelogs use to split log file periodically
-- lfshook is the logrus hook plugin, it will match log level to decide which log file should be write.
-
-## Test
-
-Not implement yet.
-
-## CI/CD
-
-Not implement yet.
-
-## Run
-
-| Name | Version       |
-| ---- | ------------- |
-| Go   | go1.17.6      |
-| Make | GNU Make 3.81 |
-
-0. Initialize environment variable
-
+```sh
+$ git clone https://github.com/mgr1054/go-ticket.git
 ```
-cp env-sample .env
+2. Pull the required images from DockerHub. 
+
+```sh
+$ docker compose pull
 ```
 
-1. Start database
+3. Start the Docker container. 
 
-```
-docker-compose up -d
-```
-
-2. Build service
-
-It will build swagger document in ./docs at the same time, and u will get a executable file named app.
-
-```
-make build
+```sh
+$ docker compose up
 ```
 
-3. Start service
+4. Now the service is up and running. 
 
-```
-./app
-```
-
-4. Result
-
-You should be able to accept service by `http://localhost:8080/health` and accept swagger docs by `http://localhost:8080/swagger/index.html`.
+Service accepts requests under `http://localhost:8080/api`  
+API Documentation is reachable under `http://localhost:8080/swagger/index.html`  
+A pre-defined Postman workspace is avaiable [here](https://github.com/mgr1054/go-ticket/json/postman.json)
