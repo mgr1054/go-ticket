@@ -7,6 +7,11 @@ import (
 	"github.com/mgr1054/go-ticket/pkg/middleware"
 	"github.com/mgr1054/go-ticket/pkg/utils"
 	log "github.com/sirupsen/logrus"
+
+	_ "github.com/mgr1054/go-ticket/pkg/docs"
+
+	swaggerFiles "github.com/swaggo/files"
+   	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func init() {
@@ -14,9 +19,24 @@ func init() {
 	utils.InitAdmin()
 }
 
+// @title Go-Ticket API
+// @version 1.0
+// @description This is a basic ticket service written in go.
+
+// @contact.name Max Greß
+// @contact.url https://github.com/mgr1054/go-ticket
+// @contact.email max.gress@student.reutlingen-university.de
+
+// @host localhost:8080
+// @BasePath /api
 func main() {
 	log.Info("Starting API server")
+	
 	router := gin.Default()
+
+	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 
 	api := router.Group("/api") 
 	{
@@ -33,9 +53,9 @@ func main() {
 			secured.POST("/events", controller.CreateEvent)
 			secured.PUT("/events/:id", controller.UpdateEventById)
 			secured.DELETE("/events/:id", controller.DeleteEventById)
-			secured.GET("/ticket/:id", controller.CreateTicket)
+			secured.GET("/tickets/:id", controller.CreateTicket)
 			secured.GET("/tickets/event/:id", controller.GetTicketsByEvent)
-			secured.DELETE("/ticket/:id", controller.DeleteTicketById)
+			secured.DELETE("/tickets/:id", controller.DeleteTicketById)
 			secured.GET("/tickets/user/:id", controller.GetTicketsByID)
 			secured.GET("/user/:id", controller.GetUserById)
 			secured.PUT("/user/:id", controller.UpdateUserById)

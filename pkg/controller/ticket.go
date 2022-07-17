@@ -18,6 +18,18 @@ type TicketRequest struct {
 
 }
 
+
+// @Summary 		Create Ticket by EventID
+// @Description		Creates Ticket for EventID, also checks if enough capacity is available
+// @Description		allowed: user
+// @ID				create-ticket
+// @Tags 			tickets
+// @Produce 		json
+// @Success 		200 {object} models.Ticket
+// @Failure			401 {object} string
+// @Failure			404 {object} string
+// @Failure			500 {object} string
+// @Router 			/secured/tickets/{id} [get]
 func CreateTicket (c *gin.Context) {
 
 	if err := utils.CheckUserType(c, "user"); err != nil {
@@ -58,9 +70,21 @@ func CreateTicket (c *gin.Context) {
 	c.JSON(http.StatusOK, NewTicket)
 }
 
+// @Summary 		Get Tickets By EventID
+// @Description		Gives back a number of all sold tickets for this event
+// @Description		allowed: admin
+// @ID				get-tickets-by-event-id
+// @Tags 			tickets
+// @Produce 		json
+// @Success 		200 {object} models.Event
+// @Failure			400 {object} string
+// @Failure			401 {object} string
+// @Failure			404 {object} string
+// @Failure			500 {object} string
+// @Router 			/secured/tickets/events/{id} [get]
 func GetTicketsByEvent (c* gin.Context) {
 
-	if err := utils.CheckUserType(c, "user"); err != nil {
+	if err := utils.CheckUserType(c, "admin"); err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
 		return
 	}
@@ -75,9 +99,20 @@ func GetTicketsByEvent (c* gin.Context) {
 	c.JSON(http.StatusOK, usedCapacity)
 }
 
+// @Summary 		Get Tickets By UserID
+// @Description		Gives back all tickets for user
+// @Description		allowed: admin
+// @ID				get-tickets-by-user-id
+// @Tags 			tickets
+// @Produce 		json
+// @Success 		200 {object} models.Ticket
+// @Failure			401 {object} string
+// @Failure			404 {object} string
+// @Failure			500 {object} string
+// @Router 			/secured/tickets/user/{id} [get]
 func GetTicketsByID (c* gin.Context) {
 
-	if err := utils.CheckUserType(c, "user"); err != nil {
+	if err := utils.CheckUserType(c, "admin"); err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
 		return
 	}
@@ -97,6 +132,17 @@ func GetTicketsByID (c* gin.Context) {
 	c.JSON(http.StatusOK, ticket)
 }
 
+// @Summary 		Delete Ticket By ID
+// @Description		Deletes Ticket by Ticket ID, available up until one week before the event
+// @Description		allowed: admin, user
+// @ID				delete-tickets-by-user-id
+// @Tags 			tickets
+// @Produce 		json
+// @Success 		200 {object} string
+// @Failure			401 {object} string
+// @Failure			404 {object} string
+// @Failure			500 {object} string
+// @Router 			/secured/tickets/{id} [delete]
 func DeleteTicketById (c *gin.Context) {
 
 	if err := utils.CheckUserType(c, "user"); err != nil {

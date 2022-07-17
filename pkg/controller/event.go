@@ -10,11 +10,11 @@ import (
 )
 
 type NewEvent struct {
-	Band_Name	string		`json:"band_name" binding:"required"`
-	Location	string		`json:"location" binding:"required"`
-	Price		string		`json:"price" binding:"required"`
-	Capacity	int			`json:"capacity" binding:"required"`
-	Date 		string		`json:"date" binding:"required"`
+	Band_Name	string		`json:"band_name" binding:"required" example:"Deichkind"`
+	Location	string		`json:"location" binding:"required" example:"Olympiastadion"`
+	Price		string		`json:"price" binding:"required" example:"55"`
+	Capacity	int			`json:"capacity" binding:"required" example:"35000"`
+	Date 		string		`json:"date" binding:"required" example:"2022-10-11"`
 }
 
 type EventUpdate struct {
@@ -25,6 +25,16 @@ type EventUpdate struct {
 	Date 		string		`json:"date"`
 }
 
+
+// @Summary 		Get All Events
+// @Description		Sends Array Of Events 
+// @Description		allowed: user, admin
+// @ID				get-events
+// @Tags 			events
+// @Produce 		json
+// @Success 		200 {object} []models.Event
+// @Failure			404 {object} string
+// @Router 			/secured/events [get]
 func GetEvents (c *gin.Context) {
 
 	if err := utils.CheckUserType(c, "user"); err != nil {
@@ -41,6 +51,19 @@ func GetEvents (c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": events})
 }
 
+// @Summary 		Create Event
+// @Description		Creates a new Event
+// @Description		allowed: admin
+// @ID				create-event
+// @Tags 			events
+// @Accept			json
+// @Produce 		json
+// @Param			event body NewEvent true "Create Event"
+// @Success 		201 {object} models.Event
+// @Failure			400 {object} string
+// @Failure			401 {object} string
+// @Failure			500 {object} string
+// @Router 			/secured/events [post]
 func CreateEvent (c *gin.Context) {
 
 	if err := utils.CheckUserType(c, "admin"); err != nil {
@@ -68,9 +91,19 @@ func CreateEvent (c *gin.Context) {
 		return
 	} 
 
-	c.JSON(http.StatusOK, newEvent)
+	c.JSON(http.StatusCreated, newEvent)
 }
 
+// @Summary 		Get Event By ID
+// @Description		Sends a Event with ID
+// @Description		allowed: user, admin
+// @ID				get-event-by-id
+// @Tags 			events
+// @Produce 		json
+// @Success 		200 {object} models.Event
+// @Failure			401 {object} string
+// @Failure			404 {object} string
+// @Router 			/secured/events/{id} [get]
 func GetEventByID (c *gin.Context) {
 
 	if err := utils.CheckUserType(c, "user"); err != nil {
@@ -88,6 +121,16 @@ func GetEventByID (c *gin.Context) {
 	c.JSON(http.StatusOK, event)
 }
 
+// @Summary 		Get Event By Location
+// @Description		Sends Events for a Location
+// @Description		allowed: user, admin
+// @ID				get-event-by-location
+// @Tags 			events
+// @Produce 		json
+// @Success 		200 {object} []models.Event
+// @Failure			401 {object} string
+// @Failure			404 {object} string
+// @Router 			/secured/events/{location} [get]
 func GetEventByLocation (c *gin.Context) {
 
 	if err := utils.CheckUserType(c, "user"); err != nil {
@@ -110,6 +153,16 @@ func GetEventByLocation (c *gin.Context) {
 	c.JSON(http.StatusOK, event)
 }
 
+// @Summary 		Get Event By Date
+// @Description		Sends Events for a Date
+// @Description		allowed: user, admin
+// @ID				get-event-by-date
+// @Tags 			events
+// @Produce 		json
+// @Success 		200 {object} []models.Event
+// @Failure			401 {object} string
+// @Failure			404 {object} string
+// @Router 			/secured/events/{date} [get]
 func GetEventByDate (c *gin.Context) {
 
 	if err := utils.CheckUserType(c, "user"); err != nil {
@@ -132,6 +185,18 @@ func GetEventByDate (c *gin.Context) {
 	c.JSON(http.StatusOK, event)
 }
 
+// @Summary 		Update Event By ID
+// @Description		Updates Event with given ID
+// @Description		allowed: admin
+// @ID				update-event-by-id
+// @Tags 			events
+// @Produce 		json
+// @Success 		200 {object} models.Event
+// @Failure			400 {object} string
+// @Failure			401 {object} string
+// @Failure			404 {object} string
+// @Failure			500 {object} string
+// @Router 			/secured/events/{id} [put]
 func UpdateEventById (c *gin.Context) {
 
 	if err := utils.CheckUserType(c, "admin"); err != nil {
@@ -167,6 +232,17 @@ func UpdateEventById (c *gin.Context) {
 	c.JSON(http.StatusOK, event)
 }
 
+// @Summary 		Delete Event By ID
+// @Description		Deletes Event with given ID
+// @Description		allowed: admin
+// @ID				delete-event-by-id
+// @Tags 			events
+// @Produce 		plain
+// @Success 		200 {object} string
+// @Failure			401 {object} string
+// @Failure			404 {object} string
+// @Failure			500 {object} string
+// @Router 			/secured/events/{id} [delete]
 func DeleteEventById (c *gin.Context) {
 
 	if err := utils.CheckUserType(c, "admin"); err != nil {

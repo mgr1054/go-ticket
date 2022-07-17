@@ -9,13 +9,25 @@ import (
 )
 
 type UserUpdate struct {
-	Name		string		`json:"name"`
-	Username	string		`json:"username"`
-	Email		string		`json:"email"`
-	Password	string		`json:"password"`
-	Role		string		`json:"role"`
+	Name		string		`json:"name" example:"Max"`
+	Username	string		`json:"username" example:"mgr"`
+	Email		string		`json:"email" example:"mgr@online.de"`
+	Password	string		`json:"password" example:"1234"`
+	Role		string		`json:"role" example:"user"`
 }
 
+// @Summary 		Register User
+// @Description		Creates new User, hashes Password for DB
+// @Description		role automatically set to user
+// @Description		allowed: unsecured
+// @ID				register-user
+// @Tags 			user
+// @Produce 		json
+// @Param			user body UserUpdate true "Create User"
+// @Success 		201 {object} string
+// @Failure			400 {object} string
+// @Failure			500 {object} string
+// @Router 			/user/register [post]
 func RegisterUser(c *gin.Context) {
 	var user models.User
 	if err := c.ShouldBindJSON(&user); err != nil {
@@ -40,6 +52,16 @@ func RegisterUser(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"userId": user.ID, "email": user.Email, "username": user.Username, "role": user.Role})
 }
 
+// @Summary 		Get User By ID
+// @Description		Sends a User with ID
+// @Description		allowed:  admin
+// @ID				get-user-by-id
+// @Tags 			user
+// @Produce 		json
+// @Success 		200 {object} models.User
+// @Failure			401 {object} string
+// @Failure			404 {object} string
+// @Router 			/secured/user/{id} [get]
 func GetUserById (c *gin.Context) {
 
 	if err := utils.CheckUserType(c, "admin"); err != nil {
@@ -57,6 +79,18 @@ func GetUserById (c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
+// @Summary 		Update User By ID
+// @Description		Updates User with Body and corresponding ID 
+// @Description		allowed:  admin
+// @ID				update-user-by-id
+// @Tags 			user
+// @Produce 		json
+// @Accept			json
+// @Param			user body UserUpdate true "Update User"
+// @Success 		200 {object} models.User
+// @Failure			401 {object} string
+// @Failure			404 {object} string
+// @Router 			/secured/user/{id} [put]
 func UpdateUserById (c *gin.Context) {
 
 	if err := utils.CheckUserType(c, "admin"); err != nil {
@@ -92,6 +126,16 @@ func UpdateUserById (c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
+// @Summary 		Delete User By ID
+// @Description		Deltes User with corresponding ID 
+// @Description		allowed:  admin
+// @ID				delete-user-by-id
+// @Tags 			user
+// @Produce 		json
+// @Success 		200 {object} string
+// @Failure			401 {object} string
+// @Failure			404 {object} string
+// @Router 			/secured/user/{id} [delete]
 func DelteUserById (c *gin.Context) {
 
 	if err := utils.CheckUserType(c, "admin"); err != nil {

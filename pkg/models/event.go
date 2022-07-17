@@ -9,3 +9,4 @@ type Event struct {
 	Capacity	int			`json:"capacity"`
 	Date 		string		`json:"date"`
 }	
+

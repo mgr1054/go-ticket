@@ -1,0 +1,578 @@
+basePath: /api
+definitions:
+  controller.NewEvent:
+    properties:
+      band_name:
+        example: Deichkind
+        type: string
+      capacity:
+        example: 35000
+        type: integer
+      date:
+        example: "2022-10-11"
+        type: string
+      location:
+        example: Olympiastadion
+        type: string
+      price:
+        example: "55"
+        type: string
+    required:
+    - band_name
+    - capacity
+    - date
+    - location
+    - price
+    type: object
+  controller.TokenRequest:
+    properties:
+      email:
+        example: test@online.de
+        type: string
+      password:
+        example: "1234"
+        type: string
+    type: object
+  controller.UserUpdate:
+    properties:
+      email:
+        example: mgr@online.de
+        type: string
+      name:
+        example: Max
+        type: string
+      password:
+        example: "1234"
+        type: string
+      role:
+        example: user
+        type: string
+      username:
+        example: mgr
+        type: string
+    type: object
+  models.Event:
+    properties:
+      band_name:
+        type: string
+      capacity:
+        type: integer
+      date:
+        type: string
+      id:
+        type: integer
+      location:
+        type: string
+      price:
+        type: string
+    type: object
+  models.Ticket:
+    properties:
+      event_id:
+        type: integer
+      id:
+        type: integer
+      price:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: max.gress@student.reutlingen-university.de
+    name: Max Greß
+    url: https://github.com/mgr1054/go-ticket
+  description: This is a basic ticket service written in go.
+  title: Go-Ticket API
+  version: "1.0"
+paths:
+  /:
+    get:
+      description: Sends alive
+      operationId: get-health
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get Health
+      tags:
+      - health
+  /secured/events:
+    get:
+      description: |-
+        Sends Array Of Events
+        allowed: user, admin
+      operationId: get-events
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Event'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Get All Events
+      tags:
+      - events
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Creates a new Event
+        allowed: admin
+      operationId: create-event
+      parameters:
+      - description: Create Event
+        in: body
+        name: event
+        required: true
+        schema:
+          $ref: '#/definitions/controller.NewEvent'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Event'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create Event
+      tags:
+      - events
+  /secured/events/{date}:
+    get:
+      description: |-
+        Sends Events for a Date
+        allowed: user, admin
+      operationId: get-event-by-date
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Event'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Get Event By Date
+      tags:
+      - events
+  /secured/events/{id}:
+    delete:
+      description: |-
+        Deletes Event with given ID
+        allowed: admin
+      operationId: delete-event-by-id
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete Event By ID
+      tags:
+      - events
+    get:
+      description: |-
+        Sends a Event with ID
+        allowed: user, admin
+      operationId: get-event-by-id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Get Event By ID
+      tags:
+      - events
+    put:
+      description: |-
+        Updates Event with given ID
+        allowed: admin
+      operationId: update-event-by-id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update Event By ID
+      tags:
+      - events
+  /secured/events/{location}:
+    get:
+      description: |-
+        Sends Events for a Location
+        allowed: user, admin
+      operationId: get-event-by-location
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Event'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Get Event By Location
+      tags:
+      - events
+  /secured/tickets/{id}:
+    delete:
+      description: |-
+        Deletes Ticket by Ticket ID, available up until one week before the event
+        allowed: admin, user
+      operationId: delete-tickets-by-user-id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete Ticket By ID
+      tags:
+      - tickets
+    get:
+      description: |-
+        Creates Ticket for EventID, also checks if enough capacity is available
+        allowed: user
+      operationId: create-ticket
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Ticket'
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create Ticket by EventID
+      tags:
+      - tickets
+  /secured/tickets/events/{id}:
+    get:
+      description: |-
+        Gives back a number of all sold tickets for this event
+        allowed: admin
+      operationId: get-tickets-by-event-id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get Tickets By EventID
+      tags:
+      - tickets
+  /secured/tickets/user/{id}:
+    get:
+      description: |-
+        Gives back all tickets for user
+        allowed: admin
+      operationId: get-tickets-by-user-id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Ticket'
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get Tickets By UserID
+      tags:
+      - tickets
+  /secured/user/{id}:
+    delete:
+      description: |-
+        Deltes User with corresponding ID
+        allowed:  admin
+      operationId: delete-user-by-id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Delete User By ID
+      tags:
+      - user
+    get:
+      description: |-
+        Sends a User with ID
+        allowed:  admin
+      operationId: get-user-by-id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Get User By ID
+      tags:
+      - user
+    put:
+      consumes:
+      - application/json
+      description: |-
+        Updates User with Body and corresponding ID
+        allowed:  admin
+      operationId: update-user-by-id
+      parameters:
+      - description: Update User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/controller.UserUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Update User By ID
+      tags:
+      - user
+  /token:
+    post:
+      description: |-
+        Generates JWT Token based on given context, checks if username and password match
+        Encode JWT with username, email and role
+        allowed: unsecured
+      operationId: generate-token
+      parameters:
+      - description: Create Token
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/controller.TokenRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Generate Token
+      tags:
+      - auth
+  /user/register:
+    post:
+      description: |-
+        Creates new User, hashes Password for DB
+        role automatically set to user
+        allowed: unsecured
+      operationId: register-user
+      parameters:
+      - description: Create User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/controller.UserUpdate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Register User
+      tags:
+      - user
+swagger: "2.0"
