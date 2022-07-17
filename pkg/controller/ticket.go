@@ -3,11 +3,20 @@ package controller
 import (
 	"net/http"
 	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/mgr1054/go-ticket/pkg/db"
 	"github.com/mgr1054/go-ticket/pkg/models"
 	"github.com/mgr1054/go-ticket/pkg/utils"
 )
+
+type TicketRequest struct {
+	UserID		uint		`json:"user_id"`
+	EventID		uint		`json:"event_id"`
+	Price		string		`json:"price"`
+	Event		models.Event `json:"event"`	
+
+}
 
 func CreateTicket (c *gin.Context) {
 
@@ -28,10 +37,17 @@ func CreateTicket (c *gin.Context) {
 		return
 	}
 
+	var user models.User
+	
+	if err := db.DB.Where("username = ?", c.GetString("username")).First(&user).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
+
 	NewTicket := models.Ticket {
+		UserID: user.ID,
 		EventID: event.ID,
 		Price: event.Price,
-		Event: event,
 	}
 
 	if err := db.DB.Create(&NewTicket).Error; err != nil {
@@ -57,6 +73,28 @@ func GetTicketsByEvent (c* gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, usedCapacity)
+}
+
+func GetTicketsByID (c* gin.Context) {
+
+	if err := utils.CheckUserType(c, "user"); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
+		return
+	}
+
+	var ticket []models.Ticket
+
+	if err := db.DB.Where("user_id = ?", c.Param("id")).Find(&ticket).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Tickets not found"})
+		return
+	}
+
+	if len(ticket) < 1 {
+		c.JSON(http.StatusOK, gin.H{"info": "There are no tickts for this user"})
+		return
+	}
+
+	c.JSON(http.StatusOK, ticket)
 }
 
 func DeleteTicketById (c *gin.Context) {

@@ -59,8 +59,7 @@ func CreateEvent (c *gin.Context) {
 		Band_Name: event.Band_Name, 
 		Location: event.Location, 
 		Price: event.Price, 
-		Capacity: 
-		event.Capacity, 
+		Capacity: event.Capacity, 
 		Date: event.Date,
 	}
 

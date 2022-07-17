@@ -23,6 +23,7 @@ func Auth() gin.HandlerFunc{
 		}
 		
 		c.Set("role", claims.Role)
+		c.Set("username", claims.Username)
 		c.Next()
 	}
 }

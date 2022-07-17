@@ -21,6 +21,11 @@ func InitAdmin(){
 	log.Info("Admin not found, creating new Admin")
 	admin = models.User{Name: "admin", Username:"admin", Email:"admin@go-ticket.com", Password: "p", Role: "admin"}
 
+	if err := admin.HashPassword(admin.Password); err != nil {
+		log.Fatal("Password could not be hashed")
+		return
+	}
+
 	err1 := db.DB.Create(&admin).Error; if err1 != nil {
 		log.Fatalln("Error while creating Admin")
 	}
