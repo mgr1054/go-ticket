@@ -26,16 +26,16 @@ jobs:
       
     - name: Docker Login
       run:  docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
-      
-    - name: Get current date # get the date of the build
-      id: date
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d--%M-%S')"
     
     - name: Build the Docker image # push The image to the docker hub
-      run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }}
-      
-    - name: Docker Push
-      run: docker push $DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }}
+      run: docker build . --file Dockerfile --tag user/app:latest
+    
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v3.0.0
+      with:
+        context: . 
+        push: true
+        tags: pmulieeee/go-ticket:latest
     
       
 
