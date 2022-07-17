@@ -20,6 +20,7 @@ func main() {
 
 	api := router.Group("/api") 
 	{
+		api.GET("/", controller.Health)
 		api.POST("/token", controller.GenerateToken)
 		api.POST("/user/register", controller.RegisterUser)
 
