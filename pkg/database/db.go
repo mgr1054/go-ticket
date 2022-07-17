@@ -34,14 +34,19 @@ func Connect(){
 	if err != nil {
 		log.Fatalln(err)
 	}
-	log.Info("Event Model migrated to DB")
+	log.Info("Event migrated to DB")
 
 	err = db.AutoMigrate(&models.Ticket{})
 	if err != nil {
 		log.Fatalln(err)
 	}
-	log.Info("Event Ticket migrated to DB")
-	
+	log.Info("Ticket migrated to DB")
+
+	err = db.AutoMigrate(&models.User{})
+	if err != nil {
+		log.Fatalln(err)
+	}
+	log.Info("User migrated to DB")
 	
 	DB = db
 }
