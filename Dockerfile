@@ -18,7 +18,7 @@ RUN go get -d -v ./...
 RUN go install -v ./...
 
 # Build the Go app
-WORKDIR /go/src/app/cmd
+WORKDIR /go/src/app
 RUN go build -o /build
 
 # Expose port 8080 to the outside world
