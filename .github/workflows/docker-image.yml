@@ -9,6 +9,7 @@ on:
 env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+  REPO: ${{ secrets.DOCKER_REPO }}
 
 jobs:
 
@@ -33,6 +34,7 @@ jobs:
         file: ./Dockerfile
         builder: ${{ steps.buildx.outputs.name }}
         push: true
+        tags: $REPO:${GITHUB_SHA::8} .
         cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/private:buildcache
         cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/private:buildcache,mode=max
         
