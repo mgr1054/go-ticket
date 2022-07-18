@@ -334,17 +334,17 @@
                 }
             }
         },
-        "/secured/tickets/user/{id}": {
+        "/secured/tickets/user": {
             "get": {
-                "description": "Gives back all tickets for user\nallowed: admin",
+                "description": "Gives back all tickets for user\nallowed: user, admin",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "tickets"
                 ],
-                "summary": "Get Tickets By UserID",
-                "operationId": "get-tickets-by-user-id",
+                "summary": "Get Tickets",
+                "operationId": "get-tickets",
                 "responses": {
                     "200": {
                         "description": "OK",

@@ -117,7 +117,7 @@ func GetTicketsByEvent (c* gin.Context) {
 // @Failure			401 {object} string
 // @Failure			404 {object} string
 // @Failure			500 {object} string
-// @Router 			/secured/tickets/user/{id} [get]
+// @Router 			/secured/tickets/user [get]
 func GetTickets (c* gin.Context) {
 
 	if err := utils.CheckUserType(c, "user"); err != nil {
