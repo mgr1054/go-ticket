@@ -10,13 +10,6 @@
     "name": "Luca",
     "username" : "lro",
     "email" : "lro@online.de",
-    "password" : ""
-}
-
-{
-    "name": "Luca",
-    "username" : "lro",
-    "email" : "lro@online.de",
     "password" : "1234"
 }
     
