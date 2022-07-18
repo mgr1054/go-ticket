@@ -4,7 +4,7 @@ A simple Gin REST-API with following features:
 
 
 - Backend Architecture with Gin-Gonic and PosgreSQL to manage events, tickets & users 
-- Data Modles build with GORM
+- Data Modeles build with GORM
 - Logging with Loggrus
 - Documentation with Swagger
 - Authentication and Authorization with JWT
