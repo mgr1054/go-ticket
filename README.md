@@ -31,7 +31,7 @@ A simple Gin REST-API with following features:
   - middleware for authorization
 - models
   - database models
-- setting
+- utils
   - JWT generation and database helpers
 
 ## Getting started
