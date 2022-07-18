@@ -3,9 +3,8 @@
 A simple Gin REST-API with following features:
 
 
-- Backend Architecture with Gin-Gonic and PosgreSQL to manage events, tickets & users 
+- Backend Architecture with Gin-Gonic and PosgretSQL to manage events, tickets & users 
 - Data Modeles build with GORM
-- Logging with Loggrus
 - Documentation with Swagger
 - Authentication and Authorization with JWT
 - Password Encryption with Bycrypt
@@ -47,6 +46,7 @@ If you chose to do that a PostgreSQL Database is needed with the following setup
 | user     | admin         |
 | password | p             |
 | dbname   | postgres      |
+| port     | 5432          |
 
 1. Checkout the repository to your local IDE. 
 
@@ -69,4 +69,5 @@ $ docker compose up
 
 Service accepts requests under `http://localhost:8080/api`  
 API Documentation is reachable under `http://localhost:8080/swagger/index.html`  
-A pre-defined Postman workspace is avaiable at `go-ticket/json/Go-Ticket.postman_collection.json`
+A pre-defined Postman workspace is available at `go-ticket/extras/Go-Ticket.postman_collection.json`
+Project Presentation is also stored at `go-ticket/extras/Präsentation_MaxGreß.pdf`

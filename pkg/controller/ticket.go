@@ -42,7 +42,11 @@ func CreateTicket (c *gin.Context) {
 	eventCapacity := event.Capacity
 
 	usedCapacity := int64(0)
-	db.DB.Model(&models.Ticket{}).Where("event_id = ?", c.Param("id")).Count(&usedCapacity)
+	
+	if err := db.DB.Model(&models.Ticket{}).Where("event_id = ?", c.Param("id")).Count(&usedCapacity).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Event not found"})
+		return
+	}
 
 	if usedCapacity == int64(eventCapacity) {
 		c.JSON(http.StatusOK, gin.H{"info": "Unfortunately, this event is fully booked!"})
