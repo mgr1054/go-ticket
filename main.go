@@ -56,7 +56,7 @@ func main() {
 			secured.GET("/tickets/:id", controller.CreateTicket)
 			secured.GET("/tickets/event/:id", controller.GetTicketsByEvent)
 			secured.DELETE("/tickets/:id", controller.DeleteTicketById)
-			secured.GET("/tickets/user/:id", controller.GetTicketsByID)
+			secured.GET("/tickets/user", controller.GetTickets)
 			secured.GET("/user/:id", controller.GetUserById)
 			secured.PUT("/user/:id", controller.UpdateUserById)
 			secured.DELETE("/user/:id", controller.DelteUserById)

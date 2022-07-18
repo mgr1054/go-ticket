@@ -69,4 +69,4 @@ $ docker compose up
 
 Service accepts requests under `http://localhost:8080/api`  
 API Documentation is reachable under `http://localhost:8080/swagger/index.html`  
-A pre-defined Postman workspace is avaiable [here](https://github.com/mgr1054/go-ticket/json/postman.json)
+A pre-defined Postman workspace is avaiable [here](https://github.com/mgr1054/go-ticket/jsonGo-Ticketpostman_collection.json)

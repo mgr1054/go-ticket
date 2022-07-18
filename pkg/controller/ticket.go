@@ -67,7 +67,13 @@ func CreateTicket (c *gin.Context) {
 		return
 	} 
 
-	c.JSON(http.StatusOK, NewTicket)
+	c.JSON(http.StatusOK, gin.H{
+		"id":  NewTicket.ID, 
+		"username": user.Username, 
+		"event_id": event.ID, 
+		"band_name": event.Band_Name,
+		"price": event.Price,
+	})
 }
 
 // @Summary 		Get Tickets By EventID
@@ -97,10 +103,10 @@ func GetTicketsByEvent (c* gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": usedCapacity})
 }
 
-// @Summary 		Get Tickets By UserID
+// @Summary 		Get Tickets 
 // @Description		Gives back all tickets for user
-// @Description		allowed: admin
-// @ID				get-tickets-by-user-id
+// @Description		allowed: user, admin
+// @ID				get-tickets
 // @Tags 			tickets
 // @Produce 		json
 // @Success 		200 {object} models.Ticket
@@ -108,16 +114,21 @@ func GetTicketsByEvent (c* gin.Context) {
 // @Failure			404 {object} string
 // @Failure			500 {object} string
 // @Router 			/secured/tickets/user/{id} [get]
-func GetTicketsByID (c* gin.Context) {
+func GetTickets (c* gin.Context) {
 
-	if err := utils.CheckUserType(c, "admin"); err != nil {
+	if err := utils.CheckUserType(c, "user"); err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
 		return
 	}
 
-	var ticket []models.Ticket
+	var user models.User
+	if err := db.DB.Where("username = ?", c.GetString("username")).First(&user).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
 
-	if err := db.DB.Where("user_id = ?", c.Param("id")).Find(&ticket).Error; err != nil {
+	var ticket []models.Ticket
+	if err := db.DB.Where("user_id = ?", user.ID).Find(&ticket).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Tickets not found"})
 		return
 	}
@@ -147,13 +158,25 @@ func DeleteTicketById (c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
 		return
 	}
-	
+
 	var ticket models.Ticket
+	
 
 	if err := db.DB.Where("id = ?", c.Param("id")).First(&ticket).Error; err != nil {
         c.JSON(http.StatusNotFound, gin.H{"error": "Ticket not found!"})
         return
     }
+
+	var user models.User
+	if err := db.DB.Where("id = ?", ticket.UserID).First(&user).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "User not found!"})
+        return
+    }
+
+	if err:= utils.CheckUser(c, user.Username); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error":"Unauthorized for this route"})
+		return
+	}
 
 	now := time.Now()
 	currentDate := now.AddDate(0, 0, 7)

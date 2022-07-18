@@ -76,3 +76,18 @@ func CheckUserType(c *gin.Context, role string)(err error){
 	return err
 
 }
+
+func CheckUser(c *gin.Context, username string)(err error){
+	
+	userName := c.GetString("username")
+	err = nil
+
+
+	if userName != username {
+		err = errors.New("Unauthorized to access this resource")
+        return err
+    }
+
+	return err
+
+}
